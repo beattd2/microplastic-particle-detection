@@ -6,7 +6,6 @@ def pre_process(file):
     img = cv2.imread(file)
     # convert to grayscale
     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-    # threshold
     thresh = cv2.threshold(gray,128,255,cv2.THRESH_BINARY)[1]
     return img, gray, thresh
 
@@ -23,6 +22,9 @@ def draw_contour(img, cntr):
     box = np.int0(box)
     cv2.drawContours(result,[box],0,(0,0,255),2)
     return result
+
+def draw_largest_contour(img, contours, SHOW_RESULT = False):
+    None
 
 def draw_all_contours(img, contours, SHOW_RESULT = False):
     for cont in contours:
