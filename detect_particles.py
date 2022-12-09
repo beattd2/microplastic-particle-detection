@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 
+#TODO: implement functions to save to file
 
 def pre_process(file):
     img = cv2.imread(file)
@@ -9,6 +10,7 @@ def pre_process(file):
     thresh = cv2.threshold(gray,128,255,cv2.THRESH_BINARY)[1]
     return img, gray, thresh
 
+#Following contour methods used to draw boxes around detected particles
 def get_contours(img, gray, thresh):
     result = img.copy()
     contours = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -24,12 +26,22 @@ def draw_contour(img, cntr):
     return result
 
 def draw_largest_contour(img, contours, SHOW_RESULT = False):
-    None
+    max_area = 0
+    largest_contour = None
+    for cont in contours:
+        area = cv2.contourArea(cont)
+        if area > max_area:
+            largest_contour = cont
+            max_area = area
+    print(max_area)
+    img = draw_contour(img, largest_contour)
+    if SHOW_RESULT:
+        show_result(img)
 
 def draw_all_contours(img, contours, SHOW_RESULT = False):
     for cont in contours:
         img = draw_contour(img, cont)
-    if True:
+    if SHOW_RESULT:
         show_result(img)
     return img
 
@@ -37,6 +49,7 @@ def show_result(result):
     cv2.imshow("bounding_box", result)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+#end contour methods
 
 def write_image(result, fn):
     cv2.imwrite(fn,result) 

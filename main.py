@@ -5,7 +5,8 @@ import find_scale
 file = 'data/images/A.jpg'
 
 #print(find_scale.get_position_of_scale(file))
-#img, gray, thresh = dp.pre_process(file)
-#contours = dp.get_contours(img, gray, thresh)
+img, gray, thresh = dp.pre_process(file)
+contours = dp.get_contours(img, gray, thresh)
 #dp.draw_all_contours(img, contours, SHOW_RESULT=True)
-find_scale.get_scale_contour(file)
+dp.draw_largest_contour(img, contours, SHOW_RESULT=True)
+#find_scale.get_scale_contour(file, TESTING=False)
